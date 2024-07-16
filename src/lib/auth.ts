@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     redirect() {
-      return "/app";
+      return "/";
     },
   },
 };

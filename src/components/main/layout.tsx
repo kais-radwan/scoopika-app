@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { FaDatabase } from "react-icons/fa6";
+import { FaBrain, FaDatabase } from "react-icons/fa6";
 import { RiRobot2Fill } from "react-icons/ri";
 import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
@@ -14,17 +14,18 @@ import { Session } from "next-auth";
 import { readPlan } from "@/scripts/plan";
 import Settings from "./settings";
 import UpgradeDialog from "./upgradeDialog";
-import { FaBox } from "react-icons/fa6";
 import { HiChatAlt2 } from "react-icons/hi";
 import { RiChatVoiceFill } from "react-icons/ri";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { RiMenu3Fill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
-import { MdWidgets } from "react-icons/md";
+import { Dialog, DialogContent } from "../ui/dialog";
+import SignInButtons from "../signInButtons";
+import { IoLibrary } from "react-icons/io5";
 
 interface Props {
   children: React.ReactNode;
-  session: Session;
+  session: Session | null;
 }
 
 interface SideLink {
@@ -41,28 +42,28 @@ type SideItem = SideLink;
 const links: SideItem[] = [
   {
     type: "link",
-    name: "Overview",
-    path: "/app",
+    name: "Getting Started",
+    path: "/",
     icon: <AiFillHome size={16} />,
   },
   {
     type: "link",
-    name: "Agents",
-    path: "/app/agents",
+    name: "AI Bots (agents)",
+    path: "/agents",
     icon: <RiRobot2Fill size={16} />,
   },
   {
     type: "link",
-    name: "Multi-Agent Boxes",
-    path: "/app/boxes",
-    icon: <FaBox size={15} />,
-  },
-  {
-    type: "link",
-    name: "History Stores",
-    path: "/app/data-stores",
+    name: "Memory Stores",
+    path: "/data-stores",
     icon: <FaDatabase size={15} />,
   },
+  // {
+  //   type: "link",
+  //   name: "Knowledge Stores",
+  //   path: "/data-stores",
+  //   icon: <IoLibrary size={15} />,
+  // },
   // {
   //   type: "link",
   //   name: "Widgets",
@@ -104,13 +105,37 @@ const downLinks: SideItem[] = [
 export default function MainLayout({ children, session }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [path, setPath] = useState<string>("");
-  const plan = readPlan(session.user.plan);
+  const plan = readPlan(session?.user?.plan || "none");
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    setPath(pathname || "");
+    setPath((pathname || "").replace("/app", ""));
   }, [pathname]);
+
+  if (!session) {
+    return (
+      <Dialog open={true}>
+        <DialogContent>
+          <div className="font-bold">Sign in</div>
+          <p className="text-sm opacity-80">Connect your account to continue</p>
+          <div className="flex flex-col items-center justify-center gap-4 w-full">
+            <SignInButtons callbackUrl="/" />
+          </div>
+          <p className="text-sm mt-4">
+            By continue you agree to our{" "}
+            <Link
+              href="/privacy_policy.pdf"
+              target="_blank"
+              className="underline"
+            >
+              Privacy policy
+            </Link>
+          </p>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen max-h-screen overflow-auto flex flex-col pb-36 pt-20 lg:pt-0">
@@ -200,7 +225,7 @@ export default function MainLayout({ children, session }: Props) {
         } transition-all`}
       >
         <div
-          className={`fixed w-full min-h-screen max-h-screen min-w-64 max-w-64 text-foreground bg-accent dark:bg-accent/20 hidden lg:block p-4 top-0 left-0 z-50`}
+          className={`fixed w-full min-h-screen max-h-screen min-w-64 max-w-64 text-foreground hidden lg:block p-4 top-0 left-0 z-50 bg-accent dark:bg-accent/20 border-r-1`}
         >
           <div className="w-full flex items-center gap-2 mb-6 pl-1 pr-1 pt-1">
             <div className="w-full flex items-center text-xs">
@@ -267,7 +292,7 @@ export default function MainLayout({ children, session }: Props) {
           </div>
         </div>
 
-        <div className="w-full rounded-2xl md:rounded-none">
+        <div className="w-full bg-background">
           <div className="p-5 md:p-9 md:pl-10 pb-0 relative overflow-hidden flex flex-col gap-8 rounded-2xl md:rounded-none">
             {children}
           </div>

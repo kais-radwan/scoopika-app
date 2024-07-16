@@ -34,7 +34,7 @@ const Agents = async ({ session }: Props) => {
   return (
     <>
       <AppHead
-        title="Your AI Agents"
+        title="Your Agents"
         description="Personalized virtual AI assistants"
         action={
           <Button

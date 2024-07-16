@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@nextui-org/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "sonner";

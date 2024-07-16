@@ -7,6 +7,11 @@ import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
+import MainLayout from "@/components/main/layout";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -43,23 +48,24 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     title: siteConfig.name,
-    description: "Integrate personalized multimodal AI agents in your application in minutes",
+    description:
+      "Integrate personalized multimodal AI agents in your application in minutes",
     siteName: siteConfig.name,
-    images: [
-      "/images/developer-platform.png"
-    ]
+    images: ["/images/developer-platform.png"],
   },
   verification: {
     google: "iZELF-QTTz2xWE3U2-FPllqMtRpVw-1Ok4GZEO2_--A",
   },
-  metadataBase: new URL("https://scoopika.com")
+  metadataBase: new URL("https://scoopika.com"),
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Props {
   children: React.ReactNode;
-}>) {
+}
+
+export default async function Layout({ children }: Props) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <head />
@@ -71,9 +77,8 @@ export default function RootLayout({
       >
         <Providers>
           <Toaster position="bottom-right" />
-          <main>{children}</main>
+          <MainLayout session={session}>{children}</MainLayout>
           <GoogleAnalytics gaId="G-3KS7DQFER8" />
-          {/* <Footer /> */}
         </Providers>
       </body>
     </html>

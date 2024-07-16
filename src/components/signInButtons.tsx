@@ -30,9 +30,9 @@ export default function SignInButtons({
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-4 mt-14 w-full">
       <Button
-        className="w-[90%] lg:w-[60%]"
+        className="w-full"
         size="md"
         variant="solid"
         color="primary"
@@ -43,7 +43,7 @@ export default function SignInButtons({
         Continue with Google
       </Button>
       <Button
-        className="w-[90%] lg:w-[60%] border"
+        className="w-full border"
         size="md"
         variant="bordered"
         color="primary"
@@ -53,6 +53,6 @@ export default function SignInButtons({
       >
         Continue with Github
       </Button>
-    </>
+    </div>
   );
 }
