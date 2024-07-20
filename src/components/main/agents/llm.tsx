@@ -26,6 +26,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { FaChevronDown } from "react-icons/fa6";
 
 interface Props {
   agent: AgentData;
@@ -56,12 +57,15 @@ export default function AgentLLM({ agent, updateAgent }: Props) {
 
   const changeProvider = (value: string) => {
     setProvider(value);
+    const modelKey: any = Object.keys(engines[value].models.text)[0];
+    const model = engines[value].models.text[modelKey].id || "";
     updateAgent((prev) => ({
       ...prev,
       prompts: [
         {
           ...prev.prompts[0],
           llm_client: value,
+          model
         },
       ],
     }));
@@ -130,6 +134,7 @@ export default function AgentLLM({ agent, updateAgent }: Props) {
                 variant="light"
                 className="border w-full"
                 onPress={() => setProviderDrop(true)}
+                endContent={<FaChevronDown />}
                 startContent={
                   <img
                     src={usedProvider.img}
@@ -169,6 +174,7 @@ export default function AgentLLM({ agent, updateAgent }: Props) {
                 variant="light"
                 className="border w-full"
                 onPress={() => setModelDrop(true)}
+                endContent={<FaChevronDown />}
               >
                 {agent.prompts[0].model}
               </Button>
