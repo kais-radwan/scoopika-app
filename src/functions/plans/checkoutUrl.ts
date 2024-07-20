@@ -35,7 +35,7 @@ export default async function getCheckoutUrl(
         },
       },
       productOptions: {
-        redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings?tab=billing`,
+        redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}`,
         receiptButtonText: "Go to app",
         receiptThankYouNote: "Thank you for upgrading your Scoopika plan!",
       },

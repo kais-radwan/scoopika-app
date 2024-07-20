@@ -12,6 +12,8 @@ export interface Model {
 
 interface Engine {
   name: string;
+  img: string;
+  soon?: boolean;
   models: Record<"text" | "image" | "json", Model[]>;
 }
 
@@ -32,7 +34,8 @@ export const defaultOptions = {
 
 const engines: SpecificEngines = {
   openai: {
-    name: "Open AI",
+    name: "OpenAI",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7BgkOwNaX3_-VvDVxwX0UQOkAUvlSEOx2IQ&s",
     models: {
       text: [
         {
@@ -86,6 +89,7 @@ const engines: SpecificEngines = {
   },
   together: {
     name: "Together",
+    img: "https://cdn-1.webcatalog.io/catalog/together-ai/together-ai-social-preview.png?v=1714781863270",
     models: {
       text: [
         {
@@ -115,11 +119,12 @@ const engines: SpecificEngines = {
   },
   fireworks: {
     name: "Fireworks",
+    img: "https://fireworks.ai/images/fireworks-logos/apple-touch-icon.png",
     models: {
       text: [
         {
-          id: "accounts/fireworks/models/firefunction-v1",
-          name: "firefunction-v1",
+          id: "accounts/fireworks/models/firefunction-v2",
+          name: "firefunction-v2",
           options: {
             max_tokens: { min: 5, max: 32768, default: 4096, step: 1 },
             temperature: { min: 0.01, max: 5, default: 0.7, step: 0.01 },
@@ -134,6 +139,10 @@ const engines: SpecificEngines = {
 };
 
 export const providers = Object.keys(engines).map((k) => k);
+export const providersWithImg = Object.keys(engines).map((k) => ({
+  name: k,
+  img: engines[k].img,
+}));
 
 export const getEngines = (type: Prompt["type"]) => {
   if (type === "json") {
@@ -167,7 +176,7 @@ export const getOptions = (prompt: Prompt): Model["options"] => {
   if (!engine) return {};
 
   const model = engine.models[prompt.type].filter(
-    (m) => m.id === prompt.model,
+    (m) => m.id === prompt.model
   )[0];
   if (!model) return {};
 
@@ -178,7 +187,7 @@ export const getDefaultOptions = (options: Model["options"]) => {
   const defaultValues: Record<string, any> = {};
 
   Object.keys(options).map(
-    (key) => (defaultValues[key] = options[key].default),
+    (key) => (defaultValues[key] = options[key].default)
   );
 
   return defaultValues;

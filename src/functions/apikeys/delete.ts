@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import generateSecret from "@/scripts/secret";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 export default async function deleteApiKey(
   id: string,
@@ -24,6 +25,8 @@ export default async function deleteApiKey(
       userId: session.user.id,
     },
   });
+
+  await revalidatePath("/llm-providers");
 
   return { success: true };
 }

@@ -58,7 +58,7 @@ export default async function newApiKey(
     },
   });
 
-  await revalidatePath("/app", "layout");
+  await revalidatePath("/llm-providers");
 
   return { success: true, id };
 }

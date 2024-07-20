@@ -98,6 +98,22 @@ model Knowledge {
   vectors String
 }
 
+model KnowledgeStore {
+  id     String @id @default(cuid())
+  userId String
+  name   String
+}
+
+model KnowledgeSource {
+  id      String @id @default(cuid())
+  storeId String
+  userId  String
+  name    String
+  fileId  String
+  vectors String
+  type    String
+}
+
 model Waitlistv1 {
   id    String @id @default(cuid())
   email String @unique

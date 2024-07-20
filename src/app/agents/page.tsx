@@ -42,7 +42,7 @@ const Agents = async ({ session }: Props) => {
             variant="bordered"
             startContent={<FaPlus />}
             as={Link}
-            href="/app/new-agent"
+            href="/new-agent"
           >
             Create new agent
           </Button>
@@ -59,7 +59,7 @@ const Agents = async ({ session }: Props) => {
             size="sm"
             variant="flat"
             as={Link}
-            href="/app/new-agent"
+            href="/new-agent"
             className="font-semibold"
           >
             Create first agent

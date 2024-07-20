@@ -48,6 +48,12 @@ const links: SideItem[] = [
   },
   {
     type: "link",
+    name: "LLM Providers",
+    path: "/llm-providers",
+    icon: <FaBrain size={16} />,
+  },
+  {
+    type: "link",
     name: "AI Bots (agents)",
     path: "/agents",
     icon: <RiRobot2Fill size={16} />,
@@ -58,12 +64,12 @@ const links: SideItem[] = [
     path: "/data-stores",
     icon: <FaDatabase size={15} />,
   },
-  // {
-  //   type: "link",
-  //   name: "Knowledge Stores",
-  //   path: "/data-stores",
-  //   icon: <IoLibrary size={15} />,
-  // },
+  {
+    type: "link",
+    name: "Knowledge Stores",
+    path: "/knowledge",
+    icon: <IoLibrary size={15} />,
+  },
   // {
   //   type: "link",
   //   name: "Widgets",
@@ -138,7 +144,7 @@ export default function MainLayout({ children, session }: Props) {
   }
 
   return (
-    <div className="w-full min-h-screen max-h-screen overflow-auto flex flex-col pb-36 pt-20 lg:pt-0">
+    <div className=" w-full min-h-screen max-h-screen overflow-auto flex flex-col pb-36 pt-20 lg:pt-0">
       <div className="fixed w-full pl-6 pr-6 min-h-16 max-h-16 flex items-center z-50 lg:hidden bg-background md:border-b-1 top-0 left-0">
         <div className="w-full flex items-center text-sm pl-2">
           <div className="w-9 h-9 overflow-hidden rounded-xl bg-white flex items-center justify-center pt-1">

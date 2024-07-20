@@ -179,7 +179,8 @@ export default function Settings({ session }: Props) {
             <Button
               size="sm"
               color="default"
-              className="font-semibold min-w-24"
+              variant="light"
+              className="font-semibold min-w-24 border"
               isLoading={newTokenLoading}
               onPress={() => generateToken()}
             >
@@ -219,14 +220,6 @@ export default function Settings({ session }: Props) {
             ))}
           </div>
         </div>
-
-        <div className="w-full border-t-1"></div>
-        <ApiKeys
-          keys={keys}
-          setKeys={setKeys}
-          loadedKeys={loadedKeys}
-          setLoadedKeys={setLoadedKeys}
-        />
 
         {generatedToken && (
           <Dialog open={true}>

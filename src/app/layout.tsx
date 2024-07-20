@@ -10,7 +10,6 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import MainLayout from "@/components/main/layout";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 const fontSans = FontSans({
   subsets: ["latin"],

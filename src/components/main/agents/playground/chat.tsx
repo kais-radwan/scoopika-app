@@ -253,7 +253,7 @@ export default function PlaygroundChat({
             startContent={<FaChevronLeft />}
             className="justify-start"
             as={Link}
-            href="/app/playground"
+            href="/playground"
           >
             Chat with another agent
           </Button>
@@ -263,7 +263,7 @@ export default function PlaygroundChat({
             startContent={<RiRobot2Fill />}
             className="justify-start"
             as={Link}
-            href={`/app/agents/${agent.id}`}
+            href={`/agents/${agent.id}`}
           >
             Go to {agent.name} page
           </Button>
@@ -369,7 +369,7 @@ export default function PlaygroundChat({
           startContent={<RiVoiceprintLine size={16} />}
           endContent={<FaChevronRight />}
           as={Link}
-          href={`/app/playground?id=${agent.id}&voice=y`}
+          href={`/playground?id=${agent.id}&voice=y`}
         >
           Switch to voice chat
         </Button>

@@ -18,18 +18,16 @@ export default function UpgradeDialog({ title, price, className }: Props) {
   const features = {
     basic: [
       "Long-term memory (1M read & 500K write)",
-      "Agent custom knowledge sources (300K requests)",
-      "100K characters of audio output (agent speech)",
-      "500 minutes of fast audio input processing ~2s (falls back to unlimited slow processing ~10s)",
+      "Knowledge vector stores (300K requests/mo)",
+      "100K characters of voice responses",
       "Create 10 agents & 4 boxes",
       "Unlimited tools per agent",
     ],
     scale: [
       "Long-term memory (4M read & 2M write)",
-      "Agent custom knowledge sources (1.5M requests)",
-      "1M characters of audio output (agent speech)",
-      "1K minutes of fast audio input processing ~2s (falls back to unlimited slow processing ~10s)",
-      "Faster speech generation",
+      "Knowledge vector stores (1.5M requests/mo)",
+      "1M characters of voice responses",
+      "Faster speech generation & recognition",
     ],
   };
 
@@ -42,7 +40,6 @@ export default function UpgradeDialog({ title, price, className }: Props) {
           className={`font-semibold ${className}`}
           endContent={<FaChevronRight />}
           startContent={<FaRocket />}
-          href="/pricing#pricing"
         >
           {title || "Pick your plan"}{" "}
           {price !== false && (
@@ -54,7 +51,7 @@ export default function UpgradeDialog({ title, price, className }: Props) {
         <div className="font-semibold">Pick your plan!</div>
         <div className="text-sm opacity-80 flex items-center gap-1">
           See full pricing details and FAQs{" "}
-          <ResourceLink name="here" link="/pricing" />
+          <ResourceLink name="here" link="https://scoopika.com/pricing" />
         </div>
         <div className="flex flex-col lg:flex-row gap-5">
           <div className="p-6 border-1 rounded-2xl w-full flex flex-col gap-3">
@@ -71,7 +68,6 @@ export default function UpgradeDialog({ title, price, className }: Props) {
             {features["basic"].map((feature, index) => (
               <CheckItem key={`basicitem-${index}`} title={feature} />
             ))}
-            <ResourceLink name="See all features" link="pricing#pricing" />
           </div>
           <div className="p-6 border-1 rounded-2xl w-full flex flex-col gap-3">
             <div className="text-sm font-semibold mb-2">Scale - $56/month</div>
@@ -87,7 +83,6 @@ export default function UpgradeDialog({ title, price, className }: Props) {
               <CheckItem key={`basicitem-${index}`} title={feature} />
             ))}
 
-            <ResourceLink name="See all features" link="pricing#pricing" />
           </div>
         </div>
       </DialogContent>

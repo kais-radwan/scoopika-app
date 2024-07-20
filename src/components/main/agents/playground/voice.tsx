@@ -176,7 +176,7 @@ export default function VoiceChat({
             startContent={<FaChevronLeft />}
             className="justify-start"
             as={Link}
-            href="/app/playground"
+            href="/playground"
           >
             Chat with another agent
           </Button>
@@ -186,7 +186,7 @@ export default function VoiceChat({
             startContent={<RiRobot2Fill />}
             className="justify-start"
             as={Link}
-            href={`/app/agents/${agent.id}`}
+            href={`/agents/${agent.id}`}
           >
             Go to {agent.name} page
           </Button>

@@ -40,8 +40,8 @@ export default async function NewAgentPage() {
             variant="flat"
             size="sm"
             as={Link}
-            href="/app/agents"
-          ></Button>
+            href="/agents"
+          />
         }
       />
       <NewAgent />

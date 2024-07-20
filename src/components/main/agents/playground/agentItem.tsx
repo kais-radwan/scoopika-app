@@ -37,7 +37,7 @@ export default function PlaygroundAgentItem({ agent }: Props) {
               variant="flat"
               startContent={<RiVoiceprintFill size={16} />}
               as={Link}
-              href={`/app/playground?id=${agent.id}&voice=y`}
+              href={`/playground?id=${agent.id}&voice=y`}
             >
               Voice playground
             </Button>
@@ -46,7 +46,7 @@ export default function PlaygroundAgentItem({ agent }: Props) {
               variant="flat"
               startContent={<HiOutlineChatBubbleBottomCenterText size={16} />}
               as={Link}
-              href={`/app/playground?id=${agent.id}`}
+              href={`/playground?id=${agent.id}`}
             >
               Text playground
             </Button>

@@ -1,6 +1,5 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { AgentData } from "@scoopika/types";
 import { Session, getServerSession } from "next-auth";
 import { Suspense } from "react";
 import AppHead from "@/components/main/head";
@@ -15,16 +14,16 @@ import Footer from "@/components/footer";
 import { Metadata } from "next";
 import OnBoard from "@/components/main/onboard";
 import { IoMdSettings } from "react-icons/io";
-import Code from "@/components/main/code";
 import StartCode from "@/components/main/startCode";
+import { RiNextjsFill } from "react-icons/ri";
 
 interface Props {
   session: Session;
 }
 
 export const metadata: Metadata = {
-  title: "Overview"
-}
+  title: "Overview",
+};
 
 const developerResources: {
   name: string;
@@ -32,28 +31,28 @@ const developerResources: {
   link: string;
   icon: React.ReactNode;
 }[] = [
-    {
-      name: "Documentation",
-      description:
-        "Clear in-depth documentation for how to use Scoopika and integrate it in your application for both server-side and client-side use",
-      link: "https://docs.scoopika.com",
-      icon: <FaBook size={17} />,
-    },
-    {
-      name: "Web integration",
-      description:
-        "Learn how to build AI-powered web applications with Scoopika and how to run agents on the client-side with real-time streaming and client-side actions",
-      link: "https://docs.scoopika.com/guides/scoopika-for-the-web",
-      icon: <TbWorldBolt size={19} />,
-    },
-    {
-      name: "Open-source",
-      description:
-        "99% of Scoopika is open-sourced. Check the repositories of Scoopika to report issues, help us improve Scoopika, or just check how the code works",
-      link: "https://github.com/scoopika",
-      icon: <FaGithub size={19} />,
-    },
-  ];
+  {
+    name: "Documentation",
+    description:
+      "Clear in-depth documentation for how to use Scoopika and integrate it in your application for both server-side and client-side use",
+    link: "https://docs.scoopika.com",
+    icon: <FaBook size={17} />,
+  },
+  {
+    name: "Web integration",
+    description:
+      "Learn how to build AI-powered web applications with Scoopika and how to run agents on the client-side with real-time streaming and client-side actions",
+    link: "https://docs.scoopika.com/guides/scoopika-for-the-web",
+    icon: <TbWorldBolt size={19} />,
+  },
+  {
+    name: "Open-source",
+    description:
+      "99% of Scoopika is open-sourced. Check the repositories of Scoopika to report issues, help us improve Scoopika, or just check how the code works",
+    link: "https://github.com/scoopika",
+    icon: <FaGithub size={19} />,
+  },
+];
 
 const Home = async ({ session }: Props) => {
   const agents = await db.agent.findMany({
@@ -64,9 +63,15 @@ const Home = async ({ session }: Props) => {
 
   const tokens = await db.token.findMany({
     where: {
-      userId: session.user.id
-    }
-  })
+      userId: session.user.id,
+    },
+  });
+
+  const keys = await db.apikeys.findMany({
+    where: {
+      userId: session.user.id,
+    },
+  });
 
   return (
     <>
@@ -76,18 +81,53 @@ const Home = async ({ session }: Props) => {
       />
 
       <div className="w-full flex flex-col gap-5">
-        <OnBoard checked={agents.length > 0} required={true} title="Create your first AI bot/agent">
+        <OnBoard
+          checked={keys.length > 0}
+          required={true}
+          title="Connect LLM provider"
+        >
           <div className="text-xs">
-            Create an AI agent with custom personality and APIs to add it to your application and allow users to interact with your app in natural language
+            Connect your LLM provider (e.g. OpenAI) by providing its API key.
+            browse the list of available LLM providers and connect at least on
+            of them in order to run AI agents!
           </div>
-          <Button as={Link} href="/new-agent" color="primary" size="sm" className="mt-6 font-semibold">
+          <Button
+            as={Link}
+            href="/llm-providers"
+            color="primary"
+            size="sm"
+            className="mt-6 font-semibold"
+          >
+            Browse LLM providers
+          </Button>
+        </OnBoard>
+
+        <OnBoard
+          checked={agents.length > 0}
+          required={true}
+          title="Create your first AI bot/agent"
+        >
+          <div className="text-xs">
+            Create an AI agent with custom personality and APIs to add it to
+            your application and allow users to interact with your app in
+            natural language
+          </div>
+          <Button
+            as={Link}
+            href="/new-agent"
+            color="primary"
+            size="sm"
+            className="mt-6 font-semibold"
+          >
             Create new AI agent
           </Button>
         </OnBoard>
 
         <OnBoard checked={tokens.length > 0} title="Generate access token">
           <div className="text-xs">
-            Generate an access token and keep it safe so you can use Scoopika in your application. we recommend adding it to your .env file as <b>SCOOPIKA_TOKEN</b>
+            Generate an access token and keep it safe so you can use Scoopika in
+            your application. we recommend adding it to your .env file as{" "}
+            <b>SCOOPIKA_TOKEN</b>
           </div>
           <div className="p-3 rounded-md bg-accent text-sm mt-4 flex items-center gap-3">
             <IoMdSettings />
@@ -97,7 +137,30 @@ const Home = async ({ session }: Props) => {
 
         <OnBoard checked={false} title="Use Scoopika in your app">
           <div className="text-xs">
-            We have Typescript packages for server-side, client-side, and React! Pick the way you want to do it:
+            We have Typescript packages for server-side, client-side, and React!
+            Pick the way you want to do it:
+          </div>
+          <div className="mt-4 flex items-center gap-3">
+            <Button
+              size="sm"
+              variant="flat"
+              startContent={<FaBook />}
+              as={Link}
+              href="https://docs.scoopika.com"
+              target="_blank"
+            >
+              Documentation
+            </Button>
+            <Button
+              size="sm"
+              variant="bordered"
+              startContent={<RiNextjsFill size={17} />}
+              as={Link}
+              target="_blank"
+              href="https://docs.scoopika.com/guides/usage/next-js"
+            >
+              NextJS guide
+            </Button>
           </div>
           <StartCode />
         </OnBoard>

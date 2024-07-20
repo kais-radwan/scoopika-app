@@ -27,7 +27,7 @@ export default function AgentItem({ agent }: Props) {
   return (
     <>
       <div
-        // href={`/app/agents/${agent.id}`}
+        // href={`/agents/${agent.id}`}
         className="w-full flex items-center p-4 hover:bg-accent/40 dark:hover:bg-accent/10 cursor-pointer"
         onClick={() => setOpen((prev) => !prev)}
       >
@@ -54,7 +54,7 @@ export default function AgentItem({ agent }: Props) {
                 size="sm"
                 variant="light"
                 as={Link}
-                href={`/app/agents/${agent.id}`}
+                href={`/agents/${agent.id}`}
                 startContent={<MdSettings size={16} />}
                 isIconOnly
               />
@@ -81,7 +81,7 @@ export default function AgentItem({ agent }: Props) {
                     size="sm"
                     variant="light"
                     as={Link}
-                    href={`/app/playground?id=${agent.id}`}
+                    href={`/playground?id=${agent.id}`}
                     startContent={<RiChatVoiceFill size={16} />}
                     isIconOnly
                   />
@@ -92,7 +92,7 @@ export default function AgentItem({ agent }: Props) {
                     variant="light"
                     as={Link}
                     aria-label="Code"
-                    href={`/app/agents/${agent.id}?tab=code`}
+                    href={`/agents/${agent.id}?tab=code`}
                     startContent={<MdCode size={16} />}
                     isIconOnly
                   />
@@ -181,7 +181,7 @@ export default function AgentItem({ agent }: Props) {
               variant="bordered"
               startContent={<MdSettings size={15} />}
               as={Link}
-              href={`/app/agents/${agent.id}`}
+              href={`/agents/${agent.id}`}
             >
               Manage agent
             </Button>
@@ -191,7 +191,7 @@ export default function AgentItem({ agent }: Props) {
               variant="bordered"
               startContent={<RiChatVoiceFill size={15} />}
               as={Link}
-              href={`/app/playground/?id=${agent.id}`}
+              href={`/playground/?id=${agent.id}`}
             >
               Playground
             </Button>
