@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 import SignInButtons from "@/components/signInButtons";
 import Link from "next/link";
 import { Metadata } from "next";
+import { Button } from "@nextui-org/react";
 
 export const metadata: Metadata = {
-  title: "Welcome"
-}
+  title: "Welcome",
+};
 
 export default async function Page({
   searchParams,
@@ -18,7 +19,14 @@ export default async function Page({
   const session = await getServerSession(authOptions);
 
   if (session) {
-    return redirect("/");
+    return (
+      <div className="w-full pt-24 flex flex-col items-center justify-center gap-3">
+        <div>You are already logged in</div>
+        <Button as={Link} size="sm" color="primary" href="/" className="font-semibold">
+          Continue to app
+        </Button>
+      </div>
+    );
   }
 
   return (

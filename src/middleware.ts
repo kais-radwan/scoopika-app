@@ -9,5 +9,7 @@ export const config = {
     "/new-agent",
     "/usage",
     "/playground",
+    "/knowledge",
+    "/data-stores"
   ],
 };
