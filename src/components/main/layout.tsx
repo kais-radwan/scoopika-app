@@ -73,20 +73,20 @@ const links: SideItem[] = [
   // {
   //   type: "link",
   //   name: "Widgets",
-  //   path: "/app/widgets",
+  //   path: "/widgets",
   //   icon: <MdWidgets size={15} />,
   //   tag: "new",
   // },
   {
     type: "link",
     name: "Playground",
-    path: "/app/playground",
+    path: "/playground",
     icon: <RiChatVoiceFill size={18} className="font-semibold" />,
   },
   {
     type: "link",
     name: "Plan & Usage",
-    path: "/app/usage",
+    path: "/usage",
     icon: <FaChartSimple size={15} />,
   },
 ];
