@@ -127,6 +127,26 @@ const engines: SpecificEngines = {
     models: {
       text: [
         {
+          id: "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+          name: "Llama-3.1-70B-Instruct-Turbo",
+          options: {},
+        },
+        {
+          id: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+          name: "Llama-3.1-8B-Instruct-Turbo",
+          options: {},
+        },
+        {
+          id: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+          name: "Llama-3.1-405B-Instruct-Turbo",
+          options: {},
+        },
+        {
+          id: "meta-llama/Meta-Llama-3-70B-Instruct-Turbo",
+          name: "Llama-3-70B-Instruct-Turbo",
+          options: {},
+        },
+        {
           id: "mistralai/Mixtral-8x7B-Instruct-v0.1",
           name: "Mixtral-8x7B-Instruct-v0.1",
           options: {
@@ -139,12 +159,7 @@ const engines: SpecificEngines = {
         {
           id: "mistralai/Mistral-7B-Instruct-v0.1",
           name: "Mistral-7B-Instruct-v0.1",
-          options: {
-            max_tokens: { min: 5, max: 4096, default: 512, step: 1 },
-            temperature: { min: 0, max: 2, default: 0.7, step: 0.01 },
-            top_p: { min: 0, max: 1, default: 0.7, step: 0.01 },
-            top_k: { min: 1, max: 100, default: 50, step: 1 },
-          },
+          options: {},
         },
       ],
       image: [],
