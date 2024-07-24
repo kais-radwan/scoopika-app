@@ -27,6 +27,8 @@ export default function LLMOptions({ agent, updateAgent }: Props) {
     setUsedOptions(agent.prompts[0].options);
   }, [agent]);
 
+  return null;
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

@@ -34,9 +34,9 @@ export default function ProviderItem({ keys, provider }: Props) {
 
     setNewLoading(true);
     tryRequest<{ success: true; id: string }>({
-      loading: "Adding API key",
-      success: "Added key successfully",
-      error: "Can't add API key",
+      loading: "Connecting provider...",
+      success: "Connected LLM provider successfully",
+      error: "Can't connect provider",
       func: async () => {
         const res = await newApiKey(provider.name, newProviderKey);
         if (!res || !res.success) {

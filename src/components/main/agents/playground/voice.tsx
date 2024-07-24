@@ -87,7 +87,6 @@ export default function VoiceChat({
     resumeAgentVoice,
     agentVoicePaused,
   } = useVoiceChatState(client, agentInstance, {
-    agent_name: agent.name,
     agent_voice: {
       canvas: "wave-canvas",
       audio: "agent-voice-player",
@@ -129,7 +128,7 @@ export default function VoiceChat({
     try {
       await newRequest({
         hooks: {
-          onAgentResponse: async () => await updateVoiceUsage(),
+          onModelResponse: async () => await updateVoiceUsage(),
         },
       });
     } catch {

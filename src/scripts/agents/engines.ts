@@ -87,6 +87,35 @@ const engines: SpecificEngines = {
       json: [],
     },
   },
+  groq: {
+    name: "Groq",
+    img: "https://asset.brandfetch.io/idxygbEPCQ/idzCyF-I44.png",
+    models: {
+      text: [
+        {
+          id: "llama3-70b-8192",
+          options: {},
+        },
+        {
+          id: "llama3-8b-8192",
+          options: {
+          },
+        },
+        {
+          id: "gemma2-9b-it",
+          options: {
+          },
+        },
+        {
+          id: "gemma-7b-it",
+          options: {
+          },
+        },
+      ],
+      image: [],
+      json: [],
+    },
+  },
   together: {
     name: "Together",
     img: "https://cdn-1.webcatalog.io/catalog/together-ai/together-ai-social-preview.png?v=1714781863270",

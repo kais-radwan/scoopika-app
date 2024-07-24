@@ -43,7 +43,7 @@ export default function UpgradeDialog({ title, price, className }: Props) {
         >
           {title || "Pick your plan"}{" "}
           {price !== false && (
-            <span className="text-xs">(starts at $16/month)</span>
+            <span className="text-xs">(starts at $25/month)</span>
           )}
         </Button>
       </DialogTrigger>
@@ -55,7 +55,7 @@ export default function UpgradeDialog({ title, price, className }: Props) {
         </div>
         <div className="flex flex-col lg:flex-row gap-5">
           <div className="p-6 border-1 rounded-2xl w-full flex flex-col gap-3">
-            <div className="text-sm font-semibold mb-2">Basic - $16/month</div>
+            <div className="text-sm font-semibold mb-2">Basic - $25/month</div>
             <UpgradeButton
               type="basic"
               size="sm"
@@ -70,7 +70,7 @@ export default function UpgradeDialog({ title, price, className }: Props) {
             ))}
           </div>
           <div className="p-6 border-1 rounded-2xl w-full flex flex-col gap-3">
-            <div className="text-sm font-semibold mb-2">Scale - $56/month</div>
+            <div className="text-sm font-semibold mb-2">Scale - $70/month</div>
             <UpgradeButton
               type="scale"
               size="sm"

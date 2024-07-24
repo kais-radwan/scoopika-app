@@ -47,5 +47,5 @@ export default async function createAgent(
   });
 
   await revalidatePath("/app/", "layout");
-  redirect(`/app/agents/${id}?new=y`);
+  redirect(`/agents/${id}`);
 }

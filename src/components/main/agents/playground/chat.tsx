@@ -27,6 +27,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useChatState } from "@scoopika/react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   userId: string;
@@ -65,6 +68,44 @@ const UserMessage = ({
   );
 };
 
+const MarkdownRenderer = ({ content }: { content: string }) => {
+  return (
+    <ReactMarkdown
+      className="max-w-[100vw] overflow-hidden flex flex-col whitespace-pre-wrap break-word"
+      components={{
+        code({ node, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || "");
+          return match ? (
+            <div className="relative group">
+              <SyntaxHighlighter
+                style={atomDark as any}
+                language={match[1]}
+                PreTag="div"
+                {...(props as any)}
+              >
+                {String(children).replace(/\n$/, "")}
+              </SyntaxHighlighter>
+              <Button
+                isIconOnly
+                startContent={<MdContentCopy />}
+                variant="flat"
+                className="backdrop-blur absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all"
+                onPress={() => navigator.clipboard.writeText(String(children))}
+              />
+            </div>
+          ) : (
+            <code className="pl-1 pr-1 text-xs bg-accent/30 border rounded-md">
+              {children}
+            </code>
+          );
+        },
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+};
+
 const AgentMessage = ({
   avatar,
   content,
@@ -76,17 +117,16 @@ const AgentMessage = ({
   toolCalls: { call: LLMToolCall; result: any }[];
   openTool: (t: { call: LLMToolCall; result: any }) => any;
 }) => {
-  const markdown = remark().use(remarkHtml).processSync(content);
 
   return (
     <div className="lg:p-4 flex flex-col lg:flex-row lg:items-start gap-2 md:gap-4 group w-full mt-3">
       {avatar ? (
         <img
           src={avatar}
-          className="w-10 h-10 rounded-full object-cover p-1 border-1"
+          className="min-w-10 max-w-10 min-h-10 max-h-10 rounded-full object-cover p-1 border-1"
         />
       ) : (
-        <div className="w-10 h-10 rounded-full flex items-center justify-center border-1 p-1">
+        <div className="min-w-10 max-w-10 min-h-10 max-h-10 rounded-full flex items-center justify-center border-1 p-1">
           <RiRobot2Fill />
         </div>
       )}
@@ -106,10 +146,7 @@ const AgentMessage = ({
             ))}
           </div>
         )}
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={{ __html: markdown }}
-        ></div>
+        <MarkdownRenderer content={content} />
         <div className="flex items-center gap-3 mt-4 group-hover:opacity-100 opacity-0 transition-all">
           <Button
             isIconOnly
@@ -169,7 +206,6 @@ export default function PlaygroundChat({
     streamPlaceholder,
     newRequest,
   } = useChatState(client, agentInstance, {
-    agent_name: agent.name,
     scroll: () => {
       const elm = document.getElementById("bottom-div");
       if (elm) elm.scrollIntoView();
@@ -202,14 +238,6 @@ export default function PlaygroundChat({
       inputs: {
         message: textInput,
         images,
-      },
-      hooks: {
-        onError: () => {
-          toast.error("We had an issue. sorry :(", {
-            description:
-              "Try refreshing the page. this can be due to the session expiring",
-          });
-        },
       },
     });
   };
@@ -307,14 +335,14 @@ export default function PlaygroundChat({
       </div>
       <div className="w-full flex-col flex items-center justify-end gap-4 lg:p-10 lg:pr-14 lg:pl-14">
         {messages.map((message, index) => {
-          if (message.role === "agent") {
+          if (message.role === "model") {
             return (
               <AgentMessage
                 key={`agentmessage-${index}`}
                 openTool={setOpenTool}
                 content={`${message.response.content}`}
                 avatar={agent.avatar}
-                toolCalls={message.tools}
+                toolCalls={message.response.tool_calls}
               />
             );
           }
@@ -334,7 +362,7 @@ export default function PlaygroundChat({
             openTool={setOpenTool}
             content={`${streamPlaceholder.response.content}`}
             avatar={agent.avatar}
-            toolCalls={streamPlaceholder.response.tools_calls}
+            toolCalls={streamPlaceholder.response.tool_calls}
           />
         )}
 
