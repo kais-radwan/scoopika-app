@@ -98,18 +98,23 @@ const engines: SpecificEngines = {
         },
         {
           id: "llama3-8b-8192",
-          options: {
-          },
+          options: {},
+        },
+        {
+          id: "llama-3.1-70b-versatile",
+          options: {},
+        },
+        {
+          id: "llama-3.1-8b-instant",
+          options: {},
         },
         {
           id: "gemma2-9b-it",
-          options: {
-          },
+          options: {},
         },
         {
           id: "gemma-7b-it",
-          options: {
-          },
+          options: {},
         },
       ],
       image: [],
