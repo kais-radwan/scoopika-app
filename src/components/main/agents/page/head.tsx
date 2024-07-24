@@ -67,18 +67,6 @@ export default function AgentHead({ agent, pro, apiKeys, isNew, tab }: Props) {
       comp: <AgentVoice agent={agent} pro={pro} />,
       icon: <RiVoiceprintLine size={16} />,
     },
-    knowledge: {
-      name: "Knowledge (Beta)",
-      comp: (
-        <AgentKnowledge
-          agent={agent}
-          pro={pro}
-          knowledge={knowledge}
-          setKnowledge={setKnowledge}
-        />
-      ),
-      icon: <ImBooks size={16} />,
-    },
     code: {
       name: "Code",
       comp: <AgentCode agent={agent} />,
@@ -150,7 +138,7 @@ export default function AgentHead({ agent, pro, apiKeys, isNew, tab }: Props) {
                   variant="flat"
                   startContent={<RiVoiceprintFill size={16} />}
                   as={Link}
-                  href={`/app/playground?id=${agent.id}&voice=y`}
+                  href={`/playground?id=${agent.id}&voice=y`}
                 >
                   Voice playground
                 </Button>
@@ -161,7 +149,7 @@ export default function AgentHead({ agent, pro, apiKeys, isNew, tab }: Props) {
                     <HiOutlineChatBubbleBottomCenterText size={16} />
                   }
                   as={Link}
-                  href={`/app/playground?id=${agent.id}`}
+                  href={`/playground?id=${agent.id}`}
                 >
                   Text playground
                 </Button>
@@ -178,7 +166,7 @@ export default function AgentHead({ agent, pro, apiKeys, isNew, tab }: Props) {
             variant="light"
             radius="none"
             as={Link}
-            href={`/app/agents/${agent.id}?tab=${k}`}
+            href={`/agents/${agent.id}?tab=${k}`}
             className={`min-w-max p-4 pt-5 pb-5 ${
               k === activeTab ? "border-b-1 border-purple-400" : "opacity-70"
             }`}

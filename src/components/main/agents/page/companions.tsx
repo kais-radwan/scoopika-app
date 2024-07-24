@@ -4,7 +4,7 @@ import listAgents from "@/functions/agents/list";
 import { Button } from "@nextui-org/react";
 import { AgentData, InAgentTool } from "@scoopika/types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
+import { FaChevronDown } from "react-icons/fa6";
 import { toast } from "sonner";
 import {
   Popover,
@@ -20,7 +20,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Empty from "../../empty";
 import { TbMessageChatbot } from "react-icons/tb";
 import Loading from "../../loading";
-import ResourceLink from "../../resourceLink";
 import AppHead from "../../head";
 import Link from "next/link";
 
