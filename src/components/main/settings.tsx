@@ -21,6 +21,7 @@ import deleteTokenForever from "@/functions/tokens/delete";
 import ApiKeys from "./apikeys";
 import { CiLogout } from "react-icons/ci";
 import { signOut } from "next-auth/react";
+import { IconSettings } from "@tabler/icons-react";
 
 interface Props {
   session: Session;
@@ -119,9 +120,9 @@ export default function Settings({ session }: Props) {
     <Dialog>
       <DialogTrigger asChild>
         <Button size="sm" variant="light" isIconOnly className="group">
-          <MdSettings
-            size={16}
-            className="opacity-60 group-hover:opacity-100 transition-all"
+          <IconSettings
+            size={20}
+            className="opacity-60 group-hover:opacity-80 transition-all"
           />
         </Button>
       </DialogTrigger>

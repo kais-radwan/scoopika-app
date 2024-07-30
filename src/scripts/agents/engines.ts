@@ -8,6 +8,9 @@ export interface Model {
     string,
     { min: number; max: number; default: number; step: number }
   >;
+  vision?: boolean;
+  tools?: boolean;
+  object?: boolean;
 }
 
 interface Engine {
@@ -47,6 +50,8 @@ const engines: SpecificEngines = {
             frequency_penalty: { min: 0, max: 1, default: 1, step: 0.01 },
             presence_penalty: { min: 0, max: 1, default: 1, step: 0.01 },
           },
+          tools: true,
+          object: true
         },
         {
           id: "gpt-4o",
@@ -56,6 +61,9 @@ const engines: SpecificEngines = {
             temperature: { min: 0, max: 1, default: 0.5, step: 0.01 },
             top_p: { min: 0, max: 1, default: 1, step: 0.01 },
           },
+          tools: true,
+          object: true,
+          vision: true
         },
         {
           id: "gpt-4-turbo",
@@ -65,6 +73,9 @@ const engines: SpecificEngines = {
             temperature: { min: 0, max: 1, default: 0.7, step: 0.01 },
             top_p: { min: 0, max: 1, default: 1, step: 0.01 },
           },
+          tools: true,
+          object: true,
+          vision: true
         },
         {
           id: "gpt-4",
@@ -73,6 +84,9 @@ const engines: SpecificEngines = {
             temperature: { min: 0, max: 1, default: 0.7, step: 0.01 },
             top_p: { min: 0, max: 1, default: 1, step: 0.01 },
           },
+          tools: true,
+          object: true,
+          vision: true
         },
         {
           id: "gpt-4-turbo-preview",
@@ -81,6 +95,9 @@ const engines: SpecificEngines = {
             temperature: { min: 0, max: 1, default: 0.7, step: 0.01 },
             top_p: { min: 0, max: 1, default: 1, step: 0.01 },
           },
+          tools: true,
+          object: true,
+          vision: true
         },
       ],
       image: [],
@@ -95,18 +112,26 @@ const engines: SpecificEngines = {
         {
           id: "llama3-70b-8192",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "llama3-8b-8192",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "llama-3.1-70b-versatile",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "llama-3.1-8b-instant",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "gemma2-9b-it",
@@ -130,21 +155,29 @@ const engines: SpecificEngines = {
           id: "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
           name: "Llama-3.1-70B-Instruct-Turbo",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
           name: "Llama-3.1-8B-Instruct-Turbo",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
           name: "Llama-3.1-405B-Instruct-Turbo",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "meta-llama/Meta-Llama-3-70B-Instruct-Turbo",
           name: "Llama-3-70B-Instruct-Turbo",
           options: {},
+          tools: true,
+          object: true,
         },
         {
           id: "mistralai/Mixtral-8x7B-Instruct-v0.1",
@@ -155,11 +188,15 @@ const engines: SpecificEngines = {
             top_p: { min: 0, max: 1, default: 0.7, step: 0.01 },
             top_k: { min: 1, max: 100, default: 50, step: 1 },
           },
+          tools: true,
+          object: true,
         },
         {
           id: "mistralai/Mistral-7B-Instruct-v0.1",
           name: "Mistral-7B-Instruct-v0.1",
           options: {},
+          tools: true,
+          object: true,
         },
       ],
       image: [],
@@ -179,6 +216,8 @@ const engines: SpecificEngines = {
             temperature: { min: 0.01, max: 5, default: 0.7, step: 0.01 },
             top_p: { min: 0.01, max: 1, default: 1, step: 0.01 },
           },
+          tools: true,
+          object: true,
         },
       ],
       image: [],

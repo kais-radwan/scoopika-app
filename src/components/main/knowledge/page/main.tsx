@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/react";
 import { KnowledgeSource, KnowledgeStore } from "@prisma/client";
-import { FaFile } from "react-icons/fa6";
+import { FaChevronRight, FaFile } from "react-icons/fa6";
 import { IoLibrary } from "react-icons/io5";
 import {
   MdAdd,
@@ -30,6 +30,12 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ResourceLink from "../../resourceLink";
 import Code from "../../code";
 import { Input } from "@/components/ui/input";
+import {
+  IconBooks,
+  IconLibrary,
+  IconSearch,
+  IconSettings,
+} from "@tabler/icons-react";
 
 interface Props {
   store: KnowledgeStore;
@@ -76,54 +82,68 @@ export default function KnowledgePage({ store, sources }: Props) {
 
   return (
     <>
-      <div className="w-full p-3 pl-4 pr-4 bg-accent/30 border rounded-2xl flex items-center gap-3">
-        <div className="text-sm opacity-70 w-full truncate flex items-center gap-2">
-          <IoLibrary size={18} />
-          {store.name}
+      <div>
+        <div className="w-full p-3 pl-4 pr-4 bg-accent/30 border-b-1 flex items-center gap-3">
+          <div className="text-sm font-semibold opacity-70 w-full truncate flex items-center gap-2">
+            <IconBooks size={20} />
+            <FaChevronRight size={11} />
+            {store.name}
+          </div>
+          <div className="min-w-max flex items-cetner gap-3">
+            <NewKnowledgeUrl store={store} />
+            <NewKnowledgeFile store={store} />
+            <DropdownMenu open={dropOpen} onOpenChange={setDropOpen}>
+              <DropdownMenuTrigger>
+                <Button
+                  size="sm"
+                  isIconOnly
+                  variant="light"
+                  className="border"
+                  startContent={<IconSettings size={18} />}
+                  onPress={() => setDropOpen((prev) => !prev)}
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigator.clipboard.writeText(store.id);
+                    toast.success("Copied knowledge store ID!");
+                  }}
+                >
+                  <div className="flex items-center gap-2 text-sm">
+                    <MdContentCopy />
+                    Copy ID
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCodeOpen(true)}>
+                  <div className="flex items-center gap-2 text-sm">
+                    <MdCode />
+                    Code
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setDeleteOpen(true)}>
+                  <div className="flex items-center gap-2 text-sm text-red-500">
+                    <MdDelete />
+                    Delete store
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
-        <div className="min-w-max flex items-cetner gap-3">
-          <NewKnowledgeUrl store={store} />
-          <NewKnowledgeFile store={store} />
-          <DropdownMenu open={dropOpen} onOpenChange={setDropOpen}>
-            <DropdownMenuTrigger>
-              <Button
-                size="sm"
-                isIconOnly
-                variant="light"
-                className="border"
-                startContent={<MdSettings />}
-                onPress={() => setDropOpen((prev) => !prev)}
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem
-                onClick={() => {
-                  navigator.clipboard.writeText(store.id);
-                  toast.success("Copied knowledge store ID!");
-                }}
-              >
-                <div className="flex items-center gap-2 text-sm">
-                  <MdContentCopy />
-                  Copy ID
-                </div>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setCodeOpen(true)}>
-                <div className="flex items-center gap-2 text-sm">
-                  <MdCode />
-                  Code
-                </div>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setDeleteOpen(true)}>
-                <div className="flex items-center gap-2 text-sm text-red-500">
-                  <MdDelete />
-                  Delete store
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div className="flex items-center gap-3 w-full p-3 pl-4 pr-4 border-b-1 bg-accent/10">
+          <IconSearch size={18} className="opacity-80" />
+          <input
+            value={search}
+            onInput={(e) => {
+              setSearch(e.currentTarget.value);
+            }}
+            placeholder="Filter by name..."
+            className="bg-transparent rounded-none border-0 focus:border-border focus:border-b-foreground text-sm"
+          />
         </div>
       </div>
-      <div className="w-full mt-3">
+      <div className="w-full p-6 pt-0">
         {sources.length < 1 && (
           <Empty
             icon={<MdDataset />}
@@ -134,15 +154,7 @@ export default function KnowledgePage({ store, sources }: Props) {
 
         {sources.length > 0 && (
           <>
-            <Input
-              value={search}
-              onInput={(e) => {
-                setSearch(e.currentTarget.value);
-              }}
-              placeholder="Filter by name..."
-              className="mb-4"
-            />
-            <div className="flex flex-col mb-10 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex gap-4 mb-10">
               {sources
                 .filter(
                   (s) =>
@@ -159,8 +171,8 @@ export default function KnowledgePage({ store, sources }: Props) {
           </>
         )}
 
-        <div className="w-full p-3 border rounded-xl bg-accent/40 mt-4">
-          <div className="text-xs p-0.5 pl-2 pr-2 border rounded-full bg-accent/30 max-w-max text-violet-500">
+        <div className="w-full p-3 border rounded-xl bg-accent/20 mt-4">
+          <div className="text-xs p-0.5 pl-2 pr-2 border rounded-full bg-accent/30 max-w-max">
             New
           </div>
           <div className="text-sm font-semibold mt-3">

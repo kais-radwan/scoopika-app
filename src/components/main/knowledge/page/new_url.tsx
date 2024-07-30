@@ -7,6 +7,7 @@ import tryRequest from "@/scripts/tryRequest";
 import isValidURL from "@/scripts/valid_url";
 import { Button } from "@nextui-org/react";
 import { KnowledgeStore } from "@prisma/client";
+import { IconLink, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { FaLink } from "react-icons/fa6";
 import { MdAdd, MdRemove } from "react-icons/md";
@@ -86,8 +87,8 @@ export default function NewKnowledgeUrl({ store }: Props) {
           size="sm"
           variant="light"
           className="border"
-          startContent={<MdAdd size={17} />}
-          endContent={<FaLink />}
+          startContent={<IconPlus size={17} />}
+          endContent={<IconLink size={17} />}
         >
           Add websites (urls)
         </Button>

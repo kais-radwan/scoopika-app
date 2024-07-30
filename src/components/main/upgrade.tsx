@@ -21,7 +21,7 @@ export default function UpgradePlan({ back, description }: Props) {
         </Link>
       )}
       <div className="w-full flex flex-col items-center justify-center p-6">
-        <div className="p-8 flex flex-col items-center justify-center border-1 rounded-2xl bg-accent/20 min-w-96 max-w-96 border-black/30 dark:border-white/20">
+        <div className="p-8 flex flex-col items-center justify-center rounded-2xl min-w-96 max-w-96">
           <div className="w-10 h-10 flex items-center justify-center bg-foreground text-background rounded-full mb-3">
             <FaRocket />
           </div>

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import createKnowledgeStore from "@/functions/knowledge/create";
 import tryRequest from "@/scripts/tryRequest";
 import { Button } from "@nextui-org/react";
+import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { FaChevronRight, FaPlus } from "react-icons/fa6";
 import { toast } from "sonner";
@@ -46,9 +47,9 @@ export default function NewKnowledgeStore() {
       <DialogTrigger asChild>
         <Button
           size="sm"
-          variant="bordered"
-          className=""
-          startContent={<FaPlus />}
+          color="primary"
+          className="font-semibold"
+          startContent={<IconPlus size={17} />}
         >
           New knowledge store
         </Button>

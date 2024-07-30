@@ -33,7 +33,6 @@ export default async function getUsage() {
   };
 
   const data = await Promise.all([
-    fetchData("load"),
     fetchData("speech"),
     fetchData("store-read"),
     fetchData("store-write"),

@@ -6,16 +6,17 @@ import AppHead from "@/components/main/head";
 import Loading from "@/components/main/loading";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
-import { FaBook, FaGithub } from "react-icons/fa6";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import { TbWorldBolt } from "react-icons/tb";
-import { LuExternalLink } from "react-icons/lu";
-import Footer from "@/components/footer";
 import { Metadata } from "next";
-import OnBoard from "@/components/main/onboard";
-import { IoMdSettings } from "react-icons/io";
-import StartCode from "@/components/main/startCode";
-import { RiNextjsFill } from "react-icons/ri";
+import {
+  IconBook,
+  IconBrandGithub,
+  IconExternalLink,
+  IconHelp,
+  IconLayout2,
+  IconPennant2,
+  IconSparkles,
+  IconTelescope,
+} from "@tabler/icons-react";
 
 interface Props {
   session: Session;
@@ -34,32 +35,58 @@ const developerResources: {
   {
     name: "Documentation",
     description:
-      "Clear in-depth documentation for how to use Scoopika and integrate it in your application for both server-side and client-side use",
+      "Full Docs on how to build LLM-powered applications using Scoopika",
     link: "https://docs.scoopika.com",
-    icon: <FaBook size={17} />,
+    icon: <IconBook size={17} />,
   },
   {
-    name: "Web integration",
+    name: "Templates & Examples",
     description:
-      "Learn how to build AI-powered web applications with Scoopika and how to run agents on the client-side with real-time streaming and client-side actions",
-    link: "https://docs.scoopika.com/guides/scoopika-for-the-web",
-    icon: <TbWorldBolt size={19} />,
+      "We've created several templates and examples using Scoopika, all available on GitHub for you to get started with",
+    link: "https://docs.scoopika.com/templates",
+    icon: <IconLayout2 size={17} />,
   },
   {
-    name: "Open-source",
+    name: "Open Source",
     description:
-      "99% of Scoopika is open-sourced. Check the repositories of Scoopika to report issues, help us improve Scoopika, or just check how the code works",
+      "Want to contribute to Scoopika? you're welcome! check out our Github account and start building with us today!",
     link: "https://github.com/scoopika",
-    icon: <FaGithub size={19} />,
+    icon: <IconBrandGithub size={19} />,
   },
 ];
 
+const Card = ({
+  title,
+  description,
+  link,
+  target,
+  icon,
+}: {
+  title: string;
+  description: string;
+  link: string;
+  target?: string;
+  icon?: React.ReactNode;
+}) => {
+  return (
+    <Link
+      href={link}
+      target={target}
+      className="w-full p-4 border rounded-xl bg-accent/10 flex flex-col gap-2 hover:bg-accent/20 shadow hover:border-black/20 dark:hover:border-white/20"
+    >
+      {icon && (
+        <div className="min-w-8 max-w-8 min-h-8 max-h-8 border rounded-md flex items-center justify-center bg-accent/10 mb-2">
+          {icon}
+        </div>
+      )}
+      <div className="text-sm">{title}</div>
+      <div className="text-xs opacity-70">{description}</div>
+    </Link>
+  );
+};
+
 const Home = async ({ session }: Props) => {
-  const agents = await db.agent.findMany({
-    where: {
-      userId: session.user.id,
-    },
-  });
+  const agents = [];
 
   const tokens = await db.token.findMany({
     where: {
@@ -76,151 +103,112 @@ const Home = async ({ session }: Props) => {
   return (
     <>
       <AppHead
-        title={`Let's get you started, ${session.user.name}`}
-        description="Welcome back to your AI portal"
+        title={`Home`}
+        description={`Welcome to Scoopika, ${session.user.name}!`}
       />
 
-      <div className="w-full flex flex-col gap-5">
-        <OnBoard
-          checked={keys.length > 0}
-          required={true}
-          title="Connect LLM provider"
-        >
-          <div className="text-xs">
-            Connect your LLM provider (e.g. OpenAI) by providing its API key.
-            browse the list of available LLM providers and connect at least on
-            of them in order to run AI agents!
-          </div>
-          <Button
-            as={Link}
-            href="/llm-providers"
-            color="primary"
-            size="sm"
-            className="mt-6 font-semibold"
-          >
-            Browse LLM providers
-          </Button>
-        </OnBoard>
-
-        <OnBoard
-          checked={agents.length > 0}
-          required={true}
-          title="Create your first AI bot/agent"
-        >
-          <div className="text-xs">
-            Create an AI agent with custom personality and APIs to add it to
-            your application and allow users to interact with your app in
-            natural language
-          </div>
-          <Button
-            as={Link}
-            href="/new-agent"
-            color="primary"
-            size="sm"
-            className="mt-6 font-semibold"
-          >
-            Create new AI agent
-          </Button>
-        </OnBoard>
-
-        <OnBoard checked={tokens.length > 0} title="Generate access token">
-          <div className="text-xs">
-            Generate an access token and keep it safe so you can use Scoopika in
-            your application. we recommend adding it to your .env file as{" "}
-            <b>SCOOPIKA_TOKEN</b>
-          </div>
-          <div className="p-3 rounded-md bg-accent text-sm mt-4 flex items-center gap-3">
-            <IoMdSettings />
-            Click on the settings icon and generate an access token
-          </div>
-        </OnBoard>
-
-        <OnBoard checked={false} title="Use Scoopika in your app">
-          <div className="text-xs">
-            We have Typescript packages for server-side, client-side, and React!
-            Pick the way you want to do it:
-          </div>
-          <div className="mt-4 flex items-center gap-3">
-            <Button
-              size="sm"
-              variant="flat"
-              startContent={<FaBook />}
-              as={Link}
-              href="https://docs.scoopika.com"
-              target="_blank"
-            >
-              Documentation
-            </Button>
-            <Button
-              size="sm"
-              variant="bordered"
-              startContent={<RiNextjsFill size={17} />}
-              as={Link}
-              target="_blank"
-              href="https://docs.scoopika.com/guides/usage/next-js"
-            >
-              NextJS guide
-            </Button>
-          </div>
-          <StartCode />
-        </OnBoard>
-      </div>
-
-      <div className="pt-8 dark:border-accent/60">
-        <div className="w-full rounded-2xl pb-5 mb-4">
-          <h3 className="text-lg font-semibold mb-2">Resources</h3>
-          <div className="text-sm opacity-80 mb-8">
-            Integrate and use Scoopika agents in your application. open-source,
-            type-safe, free, and easy to start!
-          </div>
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <Button
-              size="sm"
-              color="primary"
-              as={Link}
-              href="https://docs.scoopika.com/quickstart"
-              target="_blank"
-              className="font-semibold"
-              endContent={<FaExternalLinkAlt />}
-            >
-              Follow 2-minutes guide
-            </Button>
-            <Button
-              size="sm"
-              variant="flat"
-              as={Link}
-              href="https://docs.scoopika.com"
-              target="_blank"
-              className="font-semibold"
-              startContent={<FaBook />}
-              endContent={<FaExternalLinkAlt />}
-            >
-              Check documentation
-            </Button>
-          </div>
+      <div className="w-full flex flex-col gap-5 p-6 pt-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex gap-4 mb-6">
+          <Card
+            title="Getting Started"
+            description="Pick your framework and start building LLM-powered applications with Scoopika today!"
+            link="/getting-started"
+            icon={<IconPennant2 size={18} />}
+          />
+          <Card
+            title="Features"
+            description="A non-exhaustive list of features that Scoopika provides for every project"
+            link="https://docs.scoopika.com/features"
+            target="_blank"
+            icon={<IconSparkles size={18} />}
+          />
+          <Card
+            title="Need Help?"
+            description="We're always here for you! if you ever feel stuck or need any help, just let us know ;)"
+            link="https://docs.scoopika.com/help/contact-us"
+            target="_blank"
+            icon={<IconHelp size={18} />}
+          />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex gap-4">
-          {developerResources.map((r, index) => (
-            <Link
-              key={`developerresourceitem-${index}`}
-              href={r.link}
-              target="_blank"
-              className="p-5 border-1 rounded-2xl bg-accent/20 hover:border-black/20 dark:hover:border-white/20 min-h-max transition-all relative group"
-            >
-              <div className="w-10 h-10 flex items-center justify-center border-1 rounded-2xl bg-accent/20 mb-5">
-                {r.icon}
-              </div>
-              <div className="h-full flex flex-col">
-                <div className="font-semibold mb-1">{r.name}</div>
-                <div className="text-sm opacity-80">{r.description}</div>
-              </div>
-              <LuExternalLink className="absolute top-4 right-4 scale-0 group-hover:scale-100 transition-all" />
-            </Link>
-          ))}
+        <div className="p-6 pt-10 border-t-1 w-full flex gap-10 dark:border-accent/60">
+          <div className="w-full flex flex-col gap-3">
+            <div className="font-semibold text-xl">New to Scoopika?</div>
+            <div className="opacity-80 text-sm">
+              Let us help you begin your journey with us! Whether you're new to
+              AI and LLMs or an expert, we welcome you. You only need a basic
+              understanding of JavaScript to start using Scoopika.
+            </div>
+            <div className="text-sm opacity-80">
+              Our guides will provide you with a solid foundation before you
+              dive deeper into our world. You won't find any code in these
+              guides, just essential knowledge to get you started!
+            </div>
+            <div className="flex flex-col lg:flex-row lg:items-center w-full gap-2 mt-3">
+              <Button
+                size="sm"
+                variant="light"
+                className="border font-semibold"
+                endContent={<IconExternalLink size={18} />}
+                as={Link}
+                href="https://docs.scoopika.com/foundations"
+                target="_blank"
+              >
+                {"I'm new to AI"}
+              </Button>
+              <Button
+                size="sm"
+                variant="light"
+                className="border font-semibold"
+                endContent={<IconExternalLink size={18} />}
+                as={Link}
+                href="https://docs.scoopika.com/quickstart"
+                target="_blank"
+              >
+                {"I've built AI apps before"}
+              </Button>
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-center">
+            <div className="w-36 h-36 relative flex items-center justify-center rotate-[-20deg]">
+              <div className="w-full absolute top-2 left-0 border-t-1 border-dashed border-black/70 dark:border-white/20"></div>
+              <div className="w-full absolute bottom-2 left-0 border-t-1 border-dashed border-black/70 dark:border-white/20"></div>
+              <div className="h-full absolute top-0 left-2 border-r-1 border-dashed border-black/70 dark:border-white/20"></div>
+              <div className="h-full absolute top-0 right-2 border-r-1 border-dashed border-black/70 dark:border-white/20"></div>
+              <IconTelescope size={55} />
+              <div
+                className="absolute blur-xl min-w-2 h-2 p-1"
+                style={{
+                  boxShadow: "0px 0px 20px 8px rgba(255, 255, 255, .9)",
+                }}
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <Footer />
+      <div className="p-6 pt-0">
+        <div className="dark:border-accent/60 p-6 border-t-1">
+          <div className="w-full rounded-2xl flex flex-col gap-3">
+            <h3 className="font-semibold text-xl">Resources</h3>
+            <div className="text-sm opacity-80">
+              Resources for developers building AI applications or looking to
+              contribute to Scoopika
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex gap-4 mb-6 mt-6">
+            {developerResources.map((r, index) => (
+              <Card
+                key={`resources-${r.name}-${index}`}
+                title={r.name}
+                description={r.description}
+                link={r.link}
+                target="_target"
+                icon={r.icon}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

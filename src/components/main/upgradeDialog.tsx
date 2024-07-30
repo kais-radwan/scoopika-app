@@ -40,6 +40,9 @@ export default function UpgradeDialog({ title, price, className }: Props) {
           className={`font-semibold ${className}`}
           endContent={<FaChevronRight />}
           startContent={<FaRocket />}
+          style={{
+            boxShadow: "0px 0px 10px 0px rgba(255, 255, 255, .3)"
+          }}
         >
           {title || "Pick your plan"}{" "}
           {price !== false && (

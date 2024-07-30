@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import createDatastore from "@/functions/datastores/create";
 import tryRequest from "@/scripts/tryRequest";
 import { Button } from "@nextui-org/react";
+import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { FaChevronRight, FaPlus } from "react-icons/fa6";
 import { toast } from "sonner";
@@ -52,11 +53,11 @@ export default function NewHistoryStore() {
       <DialogTrigger asChild>
         <Button
           size="sm"
-          variant="bordered"
-          className=""
-          startContent={<FaPlus />}
+          color="primary"
+          className="font-semibold"
+          startContent={<IconPlus size={18} />}
         >
-          New history store
+          New store
         </Button>
       </DialogTrigger>
       <DialogContent>

@@ -20,7 +20,7 @@ export default function Code({ code, language, className }: Props) {
 
   return (
     <div
-      className={`w-full rounded-xl border-1 bg-foreground dark:bg-accent/10 relative group ${className}`}
+      className={`overflow-auto rounded-xl border-1 bg-foreground dark:bg-accent/10 relative group ${className}`}
     >
       <Button
         size="sm"

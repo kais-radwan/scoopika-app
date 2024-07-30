@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { Session, getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
-  title: "History stores"
+  title: "Memory stores"
 }
 
 export default async function Page() {

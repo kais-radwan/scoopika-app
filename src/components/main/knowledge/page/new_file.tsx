@@ -10,6 +10,7 @@ import { FaFile } from "react-icons/fa6";
 import { MdAdd, MdRemove } from "react-icons/md";
 import { LuFileStack } from "react-icons/lu";
 import { toast } from "sonner";
+import { IconFile, IconPlus } from "@tabler/icons-react";
 
 interface Props {
   store: KnowledgeStore;
@@ -93,8 +94,8 @@ export default function NewKnowledgeFile({ store }: Props) {
           size="sm"
           variant="light"
           className="border"
-          startContent={<MdAdd size={17} />}
-          endContent={<FaFile />}
+          startContent={<IconPlus size={17} />}
+          endContent={<IconFile size={17} />}
         >
           Add files
         </Button>
@@ -110,7 +111,7 @@ export default function NewKnowledgeFile({ store }: Props) {
         />
         <label
           htmlFor="file-upload"
-          className="w-full p-6 border-1 border-dashed rounded-lg flex flex-col items-center justify-center text-sm hover:border-black/20 dark:hover:border-white/20 bg-accent/20 transition-all cursor-pointer"
+          className="w-full p-6 border-1 border-dashed border-black/40 dark:border-white/20 rounded-lg flex flex-col items-center justify-center text-sm hover:border-black/20 dark:hover:border-white/20 bg-accent/20 transition-all cursor-pointer"
         >
           <LuFileStack size={40} className="opacity-80 mb-4" />
           <div className="text-sm">Upload files</div>

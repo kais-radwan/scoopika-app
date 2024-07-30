@@ -12,6 +12,7 @@ import ResourceLink from "../resourceLink";
 import { KnowledgeStore } from "@prisma/client";
 import Link from "next/link";
 import { IoLibrary } from "react-icons/io5";
+import { IconBooks } from "@tabler/icons-react";
 
 interface Props {
   datastore: KnowledgeStore;
@@ -64,12 +65,12 @@ export default function KnowledgeStoreItem({ datastore }: Props) {
   };
 
   return (
-    <Link href={`/knowledge/${datastore.id}`} className="w-full flex flex-col p-4 border-1 rounded-lg hover:shadow transition-all group relative hover:border-black/20 dark:hover:border-white/20">
+    <Link href={`/knowledge/${datastore.id}`} className="w-full flex flex-col p-2 rounded-lg transition-all group relative hover:bg-black/10 dark:hover:bg-accent/30 transition-all border bg-accent/20 shadow">
       <div className="flex items-center gap-3">
-        <div className="min-w-9 min-h-9 max-w-9 max-h-9 flex items-center justify-center border-1 rounded-lg">
-          <IoLibrary />
+        <div className="min-w-9 min-h-9 max-w-9 max-h-9 border rounded-md flex items-center justify-center bg-accent/30">
+          <IconBooks className="opacity-70" size={18} />
         </div>
-        <p className="font-semibold min-w-max">{datastore.name}</p>
+        <p className="text-sm min-w-max">{datastore.name}</p>
         <div className="w-full flex items-center justify-end pr-4">
           <FaChevronRight size={12} />
         </div>

@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import generateSecret from "@/scripts/secret";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 export default async function newToken(
   name: string,
@@ -53,6 +54,8 @@ export default async function newToken(
         value: data.token.substring(0, 4),
       },
     });
+
+    await revalidatePath("/", "layout");
 
     return {
       success: true,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Inter as FontSans, Onest } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Providers from "@/components/providers";
@@ -10,9 +10,6 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import MainLayout from "@/components/main/layout";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import SignInButtons from "@/components/signInButtons";
-import Link from "next/link";
 
 const fontSans = FontSans({
   subsets: ["latin"],

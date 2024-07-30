@@ -62,7 +62,7 @@ export function ThemeToggleRow() {
   const { systemTheme, theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center gap-2 w-full">
+    <div className="flex items-center gap-2">
       <Button
         isIconOnly
         size="sm"

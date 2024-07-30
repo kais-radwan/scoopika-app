@@ -6,6 +6,7 @@ import tryRequest from "@/scripts/tryRequest";
 import isValidURL from "@/scripts/valid_url";
 import { Button } from "@nextui-org/react";
 import { KnowledgeSource } from "@prisma/client";
+import { IconBackspace, IconFileText, IconFileTypePdf, IconSquareRoundedMinusFilled, IconTrashX, IconWorld } from "@tabler/icons-react";
 import { useState } from "react";
 import { FaDeleteLeft, FaFile, FaFilePdf, FaGlobe } from "react-icons/fa6";
 
@@ -15,14 +16,14 @@ interface Props {
 
 const Icon = ({ name }: { name: string }) => {
   if (isValidURL(name)) {
-    return <FaGlobe />;
+    return <IconWorld size={20} className="opacity-80" />;
   }
 
   if (name.endsWith(".pdf")) {
-    return <FaFilePdf />;
+    return <IconFileTypePdf size={20} className="opacity-80" />;
   }
 
-  return <FaFile />;
+  return <IconFileText size={20} className="opacity-80" />;
 };
 
 export default function KnowledgeSourceItem({ source }: Props) {
@@ -59,7 +60,7 @@ export default function KnowledgeSourceItem({ source }: Props) {
   };
 
   return (
-    <div className="p-3 pl-4 pr-4 border rounded-xl relative flex items-center gap-3 group shadow">
+    <div className="p-3 pl-4 pr-4 border-1 rounded-md bg-accent/10 relative flex items-center gap-3 group">
       <div className="w-full flex items-center gap-3">
         <div className="min-w-8 max-w-8 min-h-8 max-h-8 bg-accent/30 rounded-xl flex items-center justify-center border">
           <Icon name={source.name} />
@@ -69,9 +70,10 @@ export default function KnowledgeSourceItem({ source }: Props) {
       <div className="min-w-max opacity-0 group-hover:opacity-100 transition-all">
         <Button
           size="sm"
-          variant="flat"
+          variant="light"
+          className=""
           isIconOnly
-          startContent={<FaDeleteLeft />}
+          startContent={<IconTrashX size={18} />}
           onPress={() => setDeleteOpen(true)}
         />
       </div>

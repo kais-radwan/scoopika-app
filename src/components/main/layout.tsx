@@ -1,27 +1,32 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { FaBrain, FaDatabase } from "react-icons/fa6";
-import { RiRobot2Fill } from "react-icons/ri";
-import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import SvgLogo from "./logo";
 import { ThemeToggleRow } from "../themeToggle";
 import { FaBook } from "react-icons/fa6";
-import { FaChartSimple } from "react-icons/fa6";
 import { Session } from "next-auth";
 import { readPlan } from "@/scripts/plan";
 import Settings from "./settings";
 import UpgradeDialog from "./upgradeDialog";
-import { HiChatAlt2 } from "react-icons/hi";
-import { RiChatVoiceFill } from "react-icons/ri";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { RiMenu3Fill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import { Dialog, DialogContent } from "../ui/dialog";
 import SignInButtons from "../signInButtons";
-import { IoLibrary } from "react-icons/io5";
+import {
+  IconBook,
+  IconBooks,
+  IconChartBar,
+  IconCode,
+  IconCube3dSphere,
+  IconDatabaseSmile,
+  IconHelp,
+  IconHome,
+  IconMessage2Code,
+  IconPennant2,
+} from "@tabler/icons-react";
 
 interface Props {
   children: React.ReactNode;
@@ -42,33 +47,33 @@ type SideItem = SideLink;
 const links: SideItem[] = [
   {
     type: "link",
-    name: "Getting Started",
+    name: "Home",
     path: "/",
-    icon: <AiFillHome size={16} />,
+    icon: <IconHome size={20} className="opacity-80" />,
   },
   {
     type: "link",
     name: "LLM Providers",
     path: "/llm-providers",
-    icon: <FaBrain size={16} />,
+    icon: <IconCube3dSphere size={20} className="opacity-80" />,
   },
-  {
-    type: "link",
-    name: "AI Bots (agents)",
-    path: "/agents",
-    icon: <RiRobot2Fill size={16} />,
-  },
+  // {
+  //   type: "link",
+  //   name: "AI Bots (agents)",
+  //   path: "/agents",
+  //   icon: <RiRobot2Fill size={16} />,
+  // },
   {
     type: "link",
     name: "Memory Stores",
     path: "/data-stores",
-    icon: <FaDatabase size={15} />,
+    icon: <IconDatabaseSmile size={20} className="opacity-80" />,
   },
   {
     type: "link",
     name: "Knowledge Stores",
     path: "/knowledge",
-    icon: <IoLibrary size={15} />,
+    icon: <IconBooks size={20} className="opacity-80" />,
   },
   // {
   //   type: "link",
@@ -77,32 +82,31 @@ const links: SideItem[] = [
   //   icon: <MdWidgets size={15} />,
   //   tag: "new",
   // },
+  // {
+  //   type: "link",
+  //   name: "Playground",
+  //   path: "/playground",
+  //   icon: <IconMessage2Code size={20} className="opacity-80" />,
+  // },
   {
     type: "link",
-    name: "Playground",
-    path: "/playground",
-    icon: <RiChatVoiceFill size={18} className="font-semibold" />,
+    name: "Getting Started",
+    path: "/getting-started",
+    icon: <IconPennant2 size={20} className="opacity-80" />,
   },
   {
     type: "link",
     name: "Plan & Usage",
     path: "/usage",
-    icon: <FaChartSimple size={15} />,
+    icon: <IconChartBar size={20} className="opacity-80" />,
   },
 ];
 
 const downLinks: SideItem[] = [
   {
     name: "Documentation",
-    icon: <FaBook />,
+    icon: <IconBook size={20} />,
     path: "https://docs.scoopika.com",
-    target: "_blank",
-    type: "link",
-  },
-  {
-    name: "Support",
-    icon: <HiChatAlt2 size={17} />,
-    path: "https://docs.scoopika.com/help/contact-us",
     target: "_blank",
     type: "link",
   },
@@ -144,122 +148,69 @@ export default function MainLayout({ children, session }: Props) {
   }
 
   return (
-    <div className=" w-full min-h-screen max-h-screen overflow-auto flex flex-col pb-36 pt-20 lg:pt-0">
-      <div className="fixed w-full pl-6 pr-6 min-h-16 max-h-16 flex items-center z-50 lg:hidden bg-background md:border-b-1 top-0 left-0">
-        <div className="w-full flex items-center text-sm pl-2">
-          <div className="w-9 h-9 overflow-hidden rounded-xl bg-white flex items-center justify-center pt-1">
-            <SvgLogo />
-          </div>
-          <div className="font-semibold ml-3">Scoopika</div>
-        </div>
-        <div className="min-w-max flex items-center justify-end gap-4">
-          {plan.type === "free" && (
-            <UpgradeDialog
-              title="Upgrade plan"
-              price={false}
-              className="hidden md:flex"
-            />
-          )}
-          <Button
-            size="sm"
-            variant="bordered"
-            className="border-1 dark:border-white/20 hidden md:flex"
-            startContent={<FaBook />}
-            as={Link}
-            href="https://docs.scoopika.com"
-            target="_blank"
-          >
-            Docs
-          </Button>
-          <Settings session={session} />
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild>
-              <Button
-                size="sm"
-                isIconOnly
-                variant="light"
-                startContent={<RiMenu3Fill size={16} />}
-              />
-            </SheetTrigger>
-            <SheetContent>
-              <div className="pb-6 mb-4 w-full flex flex-col gap-2 border-b-1 mt-4">
-                {links.map((link, index) => (
-                  <Link
-                    href={link.path}
-                    key={`side-link-${index}`}
-                    target={link.target}
-                    className={`p-1.5 pl-2 flex items-center gap-2 text-sm ${
-                      path === link.path
-                        ? "hover:bg-purple-400/20 dark:hover:bg-purple-400/5"
-                        : "hover:bg-black/5 dark:hover:bg-accent/60"
-                    } rounded-md mb-1 group`}
-                    onClick={() => {
-                      setPath(link.path);
-                      setSheetOpen(false);
-                    }}
-                  >
-                    <div
-                      className={`flex items-center gap-2 ${
-                        path === link.path
-                          ? "text-purple-400 opacity-100"
-                          : "opacity-70"
-                      } group-hover:opacity-100`}
-                    >
-                      {link.icon} {link.name}{" "}
-                      {link.tag && (
-                        <span className="text-xs pl-2 pr-2 rounded-full border border-violet-400 text-violet-400">
-                          {link.tag}
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-                ))}
-                {plan.type === "free" && (
-                  <UpgradeDialog title="Upgrade plan" price={false} />
-                )}
-              </div>
-              <ThemeToggleRow />
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-
+    <div className="fixed top-0 left-0 w-full h-screen flex p-4 pl-0 bg-accent dark:bg-accent/35">
       {/* Desktop navbar */}
       <div
-        className={`w-full flex h-full ${
-          sidebarOpen ? "lg:pl-64" : "lg:pl-24"
-        } transition-all`}
+        className={`min-h-screen h-full min-w-64 max-w-64 text-foreground hidden lg:block p-4 pb-10 top-0 left-0 z-50`}
       >
-        <div
-          className={`fixed w-full min-h-screen max-h-screen min-w-64 max-w-64 text-foreground hidden lg:block p-4 top-0 left-0 z-50 bg-accent dark:bg-accent/20 border-r-1`}
-        >
-          <div className="w-full flex items-center gap-2 mb-6 pl-1 pr-1 pt-1">
-            <div className="w-full flex items-center text-xs">
-              <div className="w-8 h-8 overflow-hidden rounded-xl bg-white flex items-center justify-center pt-1">
-                <SvgLogo />
-              </div>
-              <div className="text-sm font-semibold ml-2">Scoopika</div>
+        <div className="w-full flex items-center gap-2 mb-4 pl-1 pr-1 pt-1">
+          <div className="w-full flex items-center text-xs">
+            <div className="w-9 h-9 overflow-hidden rounded-xl bg-white flex items-center justify-center pt-1">
+              <SvgLogo />
             </div>
-            <Settings session={session} />
+            <div className="text-sm font-semibold ml-2">Scoopika</div>
           </div>
-          {links.map((link, index) => (
+          <Settings session={session} />
+        </div>
+        {plan.type === "free" && (
+          <UpgradeDialog
+            title="Upgrade plan"
+            price={false}
+            className="hidden md:flex w-full mb-4"
+          />
+        )}
+        {links.map((link, index) => (
+          <Link
+            href={link.path}
+            key={`side-link-${index}`}
+            target={link.target}
+            className={`p-2 pl-3 pr-3 flex items-center gap-2 text-xs font-semibold transition-all border ${
+              path === link.path
+                ? "border-border/90 bg-background dark:bg-accent/30 shadow"
+                : "border-transparent hover:bg-black/5 dark:hover:bg-accent/60"
+            } rounded-sm mb-1 group`}
+            onClick={() => setPath(link.path)}
+          >
+            <div
+              className={`flex items-center gap-2 ${
+                path === link.path ? "opacity-100" : "opacity-60"
+              } group-hover:opacity-80`}
+            >
+              {link.icon} {link.name}{" "}
+              {link.tag && (
+                <span className="text-xs pl-2 pr-2 rounded-full border border-violet-400 text-violet-400">
+                  {link.tag}
+                </span>
+              )}
+            </div>
+          </Link>
+        ))}
+        <div className="w-64 p-4 absolute left-0 bottom-6 hidden lg:block">
+          {downLinks.map((link, index) => (
             <Link
               href={link.path}
               key={`side-link-${index}`}
               target={link.target}
-              className={`p-1.5 pl-2 flex items-center gap-2 text-sm ${
+              className={`p-2 pl-3 pr-3 flex items-center gap-2 text-xs font-semibold transition-all border ${
                 path === link.path
-                  ? "hover:bg-purple-400/20 dark:hover:bg-purple-400/5"
-                  : "hover:bg-black/5 dark:hover:bg-accent/60"
-              } rounded-md mb-1 group`}
-              onClick={() => setPath(link.path)}
+                  ? "border-border/70 bg-accent/30 shadow"
+                  : "border-transparent hover:bg-black/5 dark:hover:bg-accent/60"
+              } rounded-sm mb-1 group`}
             >
               <div
                 className={`flex items-center gap-2 ${
-                  path === link.path
-                    ? "text-purple-400 opacity-100"
-                    : "opacity-70"
-                } group-hover:opacity-100`}
+                  path === link.path ? "opacity-100" : "opacity-60"
+                } group-hover:opacity-80`}
               >
                 {link.icon} {link.name}{" "}
                 {link.tag && (
@@ -270,37 +221,51 @@ export default function MainLayout({ children, session }: Props) {
               </div>
             </Link>
           ))}
-          <div className="w-64 p-4 absolute left-0 bottom-0">
-            {downLinks.map((link, index) => (
-              <Link
-                href={link.path}
-                key={`side-down-link-${index}`}
-                target={link.target}
-                className={`p-1.5 pl-2 flex items-center gap-2 text-sm hover:bg-black/5 dark:hover:bg-accent/60 rounded-md mb-1 group`}
-              >
-                <div
-                  className={`flex items-center gap-2 opacity-70 group-hover:opacity-100`}
-                >
-                  {link.icon} {link.name}{" "}
-                </div>
-              </Link>
-            ))}
-            {plan.type === "free" && (
-              <UpgradeDialog
-                title="Upgrade plan"
-                price={false}
-                className="hidden md:flex w-full mt-3"
-              />
-            )}
-            <div className="pt-3 mt-4 border-t-1 dark:border-accent/70">
-              <ThemeToggleRow />
-            </div>
+          <div className="pt-3 mt-4 border-t-1 dark:border-accent/70">
+            <ThemeToggleRow />
           </div>
         </div>
-
-        <div className="w-full bg-background">
-          <div className="p-5 md:p-9 md:pl-10 pb-0 relative overflow-hidden flex flex-col gap-8 rounded-2xl md:rounded-none">
-            {children}
+      </div>
+      <div className="w-full h-full flex flex-col border-1 border-border/60 dark:border-border bg-white dark:bg-[#090909] border rounded-2xl overflow-hidden relative shadow-lg">
+        <div className="h-full w-full overflow-auto flex flex-col gap-8">
+          {children}
+        </div>
+        <div className="hidden bg-white dark:bg-[#090909] h-6 blur-xl"></div>
+        <div className="hidden w-full flex flex-col items-center justify-center gap-6 pt-6">
+          {/* <div className="h-1 w-24 bg-border rounded-full"></div> */}
+          <div className="flex items-center justify-center gap-8 ">
+            {links.map((link, index) => (
+              <Tooltip
+                key={`link-${index}`}
+                content={link.name}
+                size="sm"
+                className="bg-accent/40 backdrop-blur text-xs border-0 rounded-md"
+              >
+                <Link
+                  href={link.path}
+                  className={`flex flex-col gap-4 transition-all cursor-pointer ${
+                    path === link.path
+                      ? "opacity-100"
+                      : "opacity-60 hover:opacity-80"
+                  }`}
+                >
+                  <div>{link.icon}</div>
+                  <div
+                    style={
+                      path === link.path
+                        ? {
+                            boxShadow:
+                              "0px 0px 20px 0px rgba(255, 255, 255, .8)",
+                          }
+                        : {}
+                    }
+                    className={`w-full rounded-t-2xl h-0.5 ${
+                      path === link.path ? "bg-foreground" : ""
+                    }`}
+                  ></div>
+                </Link>
+              </Tooltip>
+            ))}
           </div>
         </div>
       </div>

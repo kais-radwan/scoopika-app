@@ -4,18 +4,10 @@ import engines, {
   defaultOptions,
   getDefaultOptions,
   getEngines,
-  providers,
   providersWithImg,
 } from "@/scripts/agents/engines";
 import { AgentData } from "@scoopika/types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-  SelectItem,
-} from "@/components/ui/select";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@nextui-org/react";
 import listKeys from "@/functions/apikeys/list";

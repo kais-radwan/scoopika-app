@@ -11,41 +11,44 @@ import tryRequest from "@/scripts/tryRequest";
 import deleteDataStore from "@/functions/datastores/delete";
 import Code from "../code";
 import ResourceLink from "../resourceLink";
+import { IconDatabase, IconTrashX } from "@tabler/icons-react";
 
 interface Props {
   datastore: { id: string; name: string };
 }
 
 const code = (
-  id: string,
+  id: string
 ) => `import { Scoopika, Agent } from "@scoopika/scoopika";
 
 const scoopika = new Scoopika({
-    store: "${id}" // Just add the store ID
+    memory: "${id}" // Just add the store ID
 });
 
 // -- EXAMPLES --
 
 // Create session
-const session = await scoopika.newSession({
+const session = await scoopika.store.newSession({
     id: "session1",
     user_id: "user1"
 });
 
 // run agent with the session
-const agent = new Agent("AGENT_ID", scoopika);
+const agent = new Agent(...);
 await agent.run({
-    inputs: {
-        message: "Hello!",
-        session_id: session.id
-    }
+  options: {
+    session_id: session.id // conversation session id
+  },
+  inputs: {
+    message: "Hello!",  
+  }
 });
 
 // Get session messages (in this example there are 2)
-const messages = await scoopika.getSessionMessages(session.id);
+const messages = await scoopika.store.getSessionMessages(session.id);
 
 // List user sessions based on ID
-const sessions = await scoopika.listUserSessions("user1");
+const sessions = await scoopika.store.listUserSessions("user1");
 `;
 
 export default function HistoryStoreItem({ datastore }: Props) {
@@ -77,21 +80,32 @@ export default function HistoryStoreItem({ datastore }: Props) {
   };
 
   return (
-    <div className="w-full flex flex-col p-4 border-1 rounded-lg hover:shadow transition-all group">
+    <div className="w-full flex flex-col p-4 border-1 rounded-lg shadow transition-all group bg-accent dark:bg-accent/10">
       <div className="flex items-center gap-3">
-        <div className="min-w-9 min-h-9 max-w-9 max-h-9 flex items-center justify-center border-1 rounded-lg">
-          <FaDatabase />
+        <div className="min-w-9 min-h-9 max-w-9 max-h-9 flex items-center justify-center border-1 rounded-md bg-accent/20">
+          <IconDatabase size={20} />
         </div>
-        <p className="font-semibold min-w-max">{datastore.name}</p>
+        <div>
+          <p className="font-semibold min-w-max">{datastore.name}</p>
+
+          <div
+            onClick={() => {
+              navigator.clipboard.writeText(datastore.id);
+              toast.success("Copied store ID!");
+            }}
+            className="opacity-70 text-xs cursor-pointer hover:underline"
+          >
+            #{datastore.id.split("-")[0]}
+          </div>
+        </div>
         <div className="w-full flex items-center justify-end translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all">
           <Button
             isIconOnly
             size="sm"
-            variant="flat"
-            className="text-red-500"
+            variant="light"
             onPress={() => setDeleteOpen(true)}
           >
-            <MdDelete size={17} />
+            <IconTrashX size={20} />
           </Button>
         </div>
       </div>
@@ -100,8 +114,8 @@ export default function HistoryStoreItem({ datastore }: Props) {
           <DialogTrigger asChild>
             <Button
               size="sm"
-              variant="flat"
-              className="min-w-max font-semibold"
+              variant="light"
+              className="min-w-max font-semibold border"
               startContent={<FaCode />}
             >
               Use in your app
@@ -116,18 +130,6 @@ export default function HistoryStoreItem({ datastore }: Props) {
             <Code language="typescript" code={code(datastore.id)} />
           </DialogContent>
         </Dialog>
-        <div className="w-full text-sm opacity-80 flex items-center justify-end truncate">
-          <Badge
-            variant="secondary"
-            className="cursor-pointer font-semibold"
-            onClick={() => {
-              navigator.clipboard.writeText(datastore.id);
-              toast.success("Copied ID");
-            }}
-          >
-            #{datastore.id.split("-")[0]}
-          </Badge>
-        </div>
       </div>
 
       {deleteOpen && (
