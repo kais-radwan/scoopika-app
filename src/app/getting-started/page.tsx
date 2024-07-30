@@ -379,7 +379,7 @@ export default function Page() {
                 className="border font-semibold"
                 endContent={<FaChevronRight size={14} />}
                 as={Link}
-                href="/data-stores"
+                href="/knowledge"
               >
                 Create knowledge store
               </Button>
