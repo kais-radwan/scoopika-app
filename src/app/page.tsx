@@ -134,13 +134,13 @@ const Home = async ({ session }: Props) => {
           <div className="w-full flex flex-col gap-3">
             <div className="font-semibold text-xl">New to Scoopika?</div>
             <div className="opacity-80 text-sm">
-              Let us help you begin your journey with us! Whether you're new to
+              Let us help you begin your journey with us! Whether {"you're"} new to
               AI and LLMs or an expert, we welcome you. You only need a basic
               understanding of JavaScript to start using Scoopika.
             </div>
             <div className="text-sm opacity-80">
               Our guides will provide you with a solid foundation before you
-              dive deeper into our world. You won't find any code in these
+              dive deeper into our world. You {"won't"} find any code in these
               guides, just essential knowledge to get you started!
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center w-full gap-2 mt-3">

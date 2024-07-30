@@ -200,7 +200,7 @@ export default function Page() {
             <div className="flex flex-col gap-4">
               <div>
                 Connect your preferred LLM provider to you with your AI agents,
-                you can check the 'LLM providers' page to see supported
+                you can check the {"'LLM providers'"} page to see supported
                 providers and code examples
               </div>
               <Button
