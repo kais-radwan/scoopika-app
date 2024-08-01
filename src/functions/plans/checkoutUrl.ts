@@ -1,7 +1,6 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
-import { configureLemonSqueezy } from "@/lib/lemonsqueezy";
 import { createCheckout } from "@lemonsqueezy/lemonsqueezy.js";
 import { getServerSession } from "next-auth";
 
@@ -9,18 +8,20 @@ export default async function getCheckoutUrl(
   type: "basic" | "scale",
   embed: boolean = false,
 ) {
+  console.log('checkout type:', type);
+
   const session = await getServerSession(authOptions);
   const variant =
     type === "basic" ? "408935" : "408932";
+
+  console.log("variant:", variant);
 
   if (!session) {
     return { success: false };
   }
 
-  configureLemonSqueezy();
-
   const checkout = await createCheckout(
-    '63009',
+    "63009",
     variant,
     {
       checkoutOptions: {
