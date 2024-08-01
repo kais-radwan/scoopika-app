@@ -1,8 +1,7 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
-import { configureLemonSqueezy } from "@/lib/lemonsqueezy";
-import { createCheckout } from "@lemonsqueezy/lemonsqueezy.js";
+import { createCheckout, lemonSqueezySetup } from "@lemonsqueezy/lemonsqueezy.js";
 import { getServerSession } from "next-auth";
 
 export default async function getCheckoutUrl(
@@ -18,7 +17,12 @@ export default async function getCheckoutUrl(
     return { success: false };
   }
 
-  configureLemonSqueezy();
+  lemonSqueezySetup({
+    apiKey: process.env.LEMONSQUEEZY_API_KEY,
+    onError: (error) => {
+      throw new Error(`Lemon Squeezy API error: ${error.message}`);
+    },
+  });
 
   try {
     const checkout = await createCheckout("63009", variant, {
