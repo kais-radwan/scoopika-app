@@ -8,24 +8,22 @@ export default async function getCheckoutUrl(
   type: "basic" | "scale",
   embed: boolean = false
 ) {
-  console.log("checkout type:", type);
-
   const session = await getServerSession(authOptions);
-  const variant = type === "basic" ? "408935" : "408932";
+  const variant = type === "basic" ? 408935 : 408932;
 
   if (!session) {
     return { success: false };
   }
 
   lemonSqueezySetup({
-    apiKey: process.env.LEMONSQUEEZY_API_KEY,
+    apiKey: process.env.LS_API_KEY,
     onError: (error) => {
       throw new Error(`Lemon Squeezy API error: ${error.message}`);
     },
   });
 
   try {
-    const checkout = await createCheckout("63009", variant, {
+    const checkout = await createCheckout(63009, variant, {
       checkoutOptions: {
         embed,
         media: false,
