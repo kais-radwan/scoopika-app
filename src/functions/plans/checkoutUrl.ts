@@ -1,29 +1,27 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
+import { configureLemonSqueezy } from "@/lib/lemonsqueezy";
 import { createCheckout } from "@lemonsqueezy/lemonsqueezy.js";
 import { getServerSession } from "next-auth";
 
 export default async function getCheckoutUrl(
   type: "basic" | "scale",
-  embed: boolean = false,
+  embed: boolean = false
 ) {
-  console.log('checkout type:', type);
+  console.log("checkout type:", type);
 
   const session = await getServerSession(authOptions);
-  const variant =
-    type === "basic" ? "408935" : "408932";
-
-  console.log("variant:", variant);
+  const variant = type === "basic" ? "408935" : "408932";
 
   if (!session) {
     return { success: false };
   }
 
-  const checkout = await createCheckout(
-    "63009",
-    variant,
-    {
+  configureLemonSqueezy();
+
+  try {
+    const checkout = await createCheckout("63009", variant, {
       checkoutOptions: {
         embed,
         media: false,
@@ -40,11 +38,16 @@ export default async function getCheckoutUrl(
         receiptButtonText: "Go to app",
         receiptThankYouNote: "Thank you for upgrading your Scoopika plan!",
       },
-    },
-  );
+    });
 
-  return {
-    success: true,
-    url: checkout.data?.data.attributes.url,
-  };
+    console.log(checkout);
+
+    return {
+      success: true,
+      url: checkout.data?.data.attributes.url,
+    };
+  } catch (err) {
+    console.error(err);
+    return { success: false };
+  }
 }

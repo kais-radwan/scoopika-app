@@ -43,7 +43,8 @@ export function UpgradeButton({ type, className, size, title }: Props) {
 
       setCheckOutUrl(checkoutUrl);
       router.push(res.url);
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error("Unexpected error", {
         description: "Contact us or try again later!",
       });
