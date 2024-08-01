@@ -11,7 +11,7 @@ export default async function getCheckoutUrl(
 ) {
   const session = await getServerSession(authOptions);
   const variant =
-    type === "basic" ? process.env.BASIC_VARIANT : process.env.SCALE_VARIANT;
+    type === "basic" ? "408935" : "408932";
 
   if (!session) {
     return { success: false };
@@ -20,8 +20,8 @@ export default async function getCheckoutUrl(
   configureLemonSqueezy();
 
   const checkout = await createCheckout(
-    process.env.LEMONSQUEEZY_STORE_ID as string,
-    variant as string,
+    '63009',
+    variant,
     {
       checkoutOptions: {
         embed,
